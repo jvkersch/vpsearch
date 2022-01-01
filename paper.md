@@ -59,7 +59,7 @@ and ggsearch36 from the FASTA suite (27x speedup) without any loss in accuracy.
 
 The VPsearch tool is implemented in Python, using Cython for
 performance-critical sections.  It outputs similarity search results in the
-"BLAST-6" tabular format used by BLAST, Diamond, the FASTA tool suite and
+"BLAST-6" tabular format also used by BLAST, Diamond, the FASTA tool suite and
 others, so that VPsearch can be used as a drop-in replacement for any of these
 tools. VPsearch is able to return the $k$ most similar sequences for a given
 query, not just the most similar match, and is fully multithreaded.
@@ -67,12 +67,15 @@ query, not just the most similar match, and is fully multithreaded.
 # Case study
 
 We compared the performance of VPsearch with two standard tools for sequence
-lookup: Blast+, a standard tool that is optimized for inexact but fast sequence
-lookup via the matching sequence pair heuristic, and ggsearch36, part of the FASTA
-suite, which relies on exact
-alignment to achieve higher accuracy at the cost of greatly increased lookup
-times. We show that VPsearch manages to combine the good aspects of both tools,
-while avoiding the drawbacks.
+lookup: Blast+, as a standard tool that is optimized for inexact but fast
+sequence lookup via the matching sequence pair heuristic, and ggsearch36, part
+of the FASTA suite, which relies on exact alignment to achieve higher accuracy
+at the cost of greatly increased lookup times. We show that VPsearch manages to
+combine the good aspects of both tools, while avoiding the drawbacks.
+
+
+![XYZ\label{fig:execution-time}](execution-time.pdf)
+
 
 
 # Figures
