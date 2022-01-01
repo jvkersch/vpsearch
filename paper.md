@@ -66,26 +66,35 @@ query, not just the most similar match, and is fully multithreaded.
 
 # Case study
 
-We compared the performance of VPsearch with two standard tools for sequence
+We compare the performance of VPsearch with two standard tools for sequence
 lookup: Blast+, as a standard tool that is optimized for inexact but fast
 sequence lookup via the matching sequence pair heuristic, and ggsearch36, part
 of the FASTA suite, which relies on exact alignment to achieve higher accuracy
 at the cost of greatly increased lookup times. We show that VPsearch manages to
 combine the good aspects of both tools, while avoiding the drawbacks.
 
+![Sequence lookup time for 232 sequences as a function of the size of the
+    database. For small databases (less than 10,000 sequences), VPsearch
+    performs comparably to Blast+ and ggsearch36. For realistic databases
+    (consisting of more than 50,000 sequences), the VPsearch lookup times
+    scales logarithmically as the size of the database
+    increases.\label{fig:execution-time}](execution-time.pdf){ width=70% }
 
-![XYZ\label{fig:execution-time}](execution-time.pdf)
+For our case study, we look up 232 query sequences from the Mothur SOP dataset
+[@2013-kozich-DevelopmentDualIndexSequencing] in the Silva database
+[@2013-quast-SILVARibosomalRNA] of 16S sequences. The database was processed by
+excising the v4 region and removing duplicate sequences, resulting in a
+database of 230,013 sequences (each approximately 250 base pairs in length)
+with known taxonomies.
 
-
-
-# Figures
-
-Figures can be included like this:
-![Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
-
-Figure sizes can be customized by adding an optional second parameter:
-![Caption for example figure.](figure.png){ width=20% }
+On the full Silva database, VPsearch is clearly the fastest (20s total lookup
+time), compared to Blast+ (157s) and ggsearch (561.3s). For Blast+ and
+ggsearch36, the total lookup time scales linearly with the size of the
+database, whereas for VPsearch the scaling is logarithmical (in other words,
+making the database 10 times larger adds a constant factor to the total lookup
+time). We therefore believe that VPsearch will continue to be an accurate yet
+performant lookup tool, even as sizes of genomic databases continue to
+increase.
 
 # Acknowledgements
 
