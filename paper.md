@@ -20,33 +20,25 @@ affiliations:
  - name: Enthought Inc., 200 W Cesar Chavez, Austin, TX 78701, United States
    index: 3
 date: 1 January 2022
-#bibliography: paper.bib
+bibliography: paper.bib
 
 ---
 
 # Summary
 
-The forces on stars, galaxies, and dark matter under external gravitational
-fields lead to the dynamical evolution of structures in the universe. The orbits
-of these bodies are therefore key to understanding the formation, history, and
-future state of galaxies. The field of "galactic dynamics," which aims to model
-the gravitating components of galaxies to study their structure and evolution,
-is now well-established, commonly taught, and frequently used in astronomy.
-Aside from toy problems and demonstrations, the majority of problems require
-efficient numerical tools, many of which require the same base code (e.g., for
-performing numerical orbit integration).
-
-
-Similarity search, \emph{i.e.} finding an approximate match from a database of
-known nucleotide sequences given an unknown query sequence, is a central task
-in the taxonomic determination and functional understanding of newly sequenced
+Similarity search, finding an approximate match from a database of known
+nucleotide sequences given an unknown query sequence, is a central task in the
+taxonomic determination and functional understanding of newly sequenced
 organisms. As databases of known, curated sequences and the number of unknown
 sequences continue to grow exponentially, tools that can organize genomic data
 at scale and make it efficiently accessible are of fundamental importance.
 
 Over the years, a number of tools for similarity search have improved upon
-BLAST in terms of lookup speed and accuracy. Some of these, such as the FASTA
-tool suite (\cite{2016-pearson-FindingProteinNucleotide}), provide rapid
+BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of these, such as the FASTA
+tool suite 
+
+
+(\cite{2016-pearson-FindingProteinNucleotide}), provide rapid
 protein or nucleotide similarity search based on sequence content
 alone. Others, such as the RDP classifier
 (\cite{2007-wang-NaiveBayesianClassifier}) for microbiome analysis, take
@@ -56,6 +48,8 @@ measures. For whole-genome sequences, data structures for approximate
 similarity search have been adopted to improve sequence lookup speed
 (\cite{2019-marcais-SketchingSublinearData}).
 
+
+`[@1990-blast]`
 
 # Statement of need
 
@@ -102,68 +96,7 @@ Figure sizes can be customized by adding an optional second parameter:
 
 # Acknowledgements
 
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
 
 # References
-Example paper.bib file:
 
-@article{Pearson:2017,
-  	url = {http://adsabs.harvard.edu/abs/2017arXiv170304627P},
-  	Archiveprefix = {arXiv},
-  	Author = {{Pearson}, S. and {Price-Whelan}, A.~M. and {Johnston}, K.~V.},
-  	Eprint = {1703.04627},
-  	Journal = {ArXiv e-prints},
-  	Keywords = {Astrophysics - Astrophysics of Galaxies},
-  	Month = mar,
-  	Title = {{Gaps in Globular Cluster Streams: Pal 5 and the Galactic Bar}},
-  	Year = 2017
-}
 
-@book{Binney:2008,
-  	url = {http://adsabs.harvard.edu/abs/2008gady.book.....B},
-  	Author = {{Binney}, J. and {Tremaine}, S.},
-  	Booktitle = {Galactic Dynamics: Second Edition, by James Binney and Scott Tremaine.~ISBN 978-0-691-13026-2 (HB).~Published by Princeton University Press, Princeton, NJ USA, 2008.},
-  	Publisher = {Princeton University Press},
-  	Title = {{Galactic Dynamics: Second Edition}},
-  	Year = 2008
-}
-
-@article{gaia,
-    author = {{Gaia Collaboration}},
-    title = "{The Gaia mission}",
-    journal = {Astronomy and Astrophysics},
-    archivePrefix = "arXiv",
-    eprint = {1609.04153},
-    primaryClass = "astro-ph.IM",
-    keywords = {space vehicles: instruments, Galaxy: structure, astrometry, parallaxes, proper motions, telescopes},
-    year = 2016,
-    month = nov,
-    volume = 595,
-    doi = {10.1051/0004-6361/201629272},
-    url = {http://adsabs.harvard.edu/abs/2016A%26A...595A...1G},
-}
-
-@article{astropy,
-    author = {{Astropy Collaboration}},
-    title = "{Astropy: A community Python package for astronomy}",
-    journal = {Astronomy and Astrophysics},
-    archivePrefix = "arXiv",
-    eprint = {1307.6212},
-    primaryClass = "astro-ph.IM",
-    keywords = {methods: data analysis, methods: miscellaneous, virtual observatory tools},
-    year = 2013,
-    month = oct,
-    volume = 558,
-    doi = {10.1051/0004-6361/201322068},
-    url = {http://adsabs.harvard.edu/abs/2013A%26A...558A..33A}
-}
-
-@misc{fidgit,
-  author = {A. M. Smith and K. Thaney and M. Hahnel},
-  title = {Fidgit: An ungodly union of GitHub and Figshare},
-  year = {2020},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  url = {https://github.com/arfon/fidgit}
-}
