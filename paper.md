@@ -20,7 +20,7 @@ affiliations:
  - name: Enthought Inc., 200 W Cesar Chavez, Austin, TX 78701, United States
    index: 3
 date: 1 January 2022
-bibliography: paper.bib
+#bibliography: paper.bib
 
 ---
 
