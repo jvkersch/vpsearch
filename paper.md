@@ -34,56 +34,46 @@ sequences continue to grow exponentially, tools that can organize genomic data
 at scale and make it efficiently accessible are of fundamental importance.
 
 Over the years, a number of tools for similarity search have improved upon
-BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of these, such as the FASTA
-tool suite 
-
-
-(\cite{2016-pearson-FindingProteinNucleotide}), provide rapid
+BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of these, such
+as the FASTA tool suite [@2016-pearson-FindingProteinNucleotide], provide rapid
 protein or nucleotide similarity search based on sequence content
-alone. Others, such as the RDP classifier
-(\cite{2007-wang-NaiveBayesianClassifier}) for microbiome analysis, take
-taxonomic information or other domain-specific information into account to
-improve classification sensitivity or to provide additional confidence
-measures. For whole-genome sequences, data structures for approximate
-similarity search have been adopted to improve sequence lookup speed
-(\cite{2019-marcais-SketchingSublinearData}).
-
-
-`[@1990-blast]`
+alone. Others, such as the RDP classifier [@2007-wang-NaiveBayesianClassifier]
+for microbiome analysis, take taxonomic information or other domain-specific
+information into account to improve classification sensitivity or to provide
+additional confidence measures. For whole-genome sequences, data structures for
+approximate similarity search have been adopted to improve sequence lookup
+speed [@2019-marcais-SketchingSublinearData].
 
 # Statement of need
 
-In this paper we present VPsearch, a light-weight Python package and
-command-line tool to organize nucleotide sequences into a so-called
-\emph{vantage point tree} (\cite{1991-uhlmann-SatisfyingGeneralProximity},
-\cite{1993-yianilos-DataStructuresAlgorithms}). This data structure allows for
+We present VPsearch, a light-weight Python package and command-line tool to
+organize nucleotide sequences into a so-called _vantage point tree_
+[@1991-uhlmann-SatisfyingGeneralProximity;
+1993-yianilos-DataStructuresAlgorithms]. This data structure allows for
 similarity searches that use a number of lookups proportional to the logarithm
 of the size of the database (rather than scanning through the database in
-linear fashion), and hence greatly speeds up similarity search queries. We show
-that for short sequences (such as the 16S rRNA gene used in bacterial
-classification) VPsearch outperforms both BLAST (7x speedup) and ggsearch36
-from the FASTA suite (27x speedup) without any loss in accuracy.
+linear fashion), and hence greatly speeds up similarity search queries. In the
+case study below we show that for short sequences (such as the 16S rRNA gene
+used in bacterial classification) VPsearch outperforms both BLAST (7x speedup)
+and ggsearch36 from the FASTA suite (27x speedup) without any loss in accuracy.
 
-The VPsearch tool is implemented in Python, using Cython for performance-critical sections.
-It outputs similarity search results in the ``BLAST-6''
-tabular format used by BLAST, Diamond, the FASTA tool suite and others, so that
-VPsearch can be used as a drop-in replacement for any of these tools. VPsearch
-is able to return the $k$ most similar sequences for a given query, not just
-the most similar match, and is fully multithreaded.
+The VPsearch tool is implemented in Python, using Cython for
+performance-critical sections.  It outputs similarity search results in the
+"BLAST-6" tabular format used by BLAST, Diamond, the FASTA tool suite and
+others, so that VPsearch can be used as a drop-in replacement for any of these
+tools. VPsearch is able to return the $k$ most similar sequences for a given
+query, not just the most similar match, and is fully multithreaded.
 
-# Citations
+# Case study
 
-Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
+We compared the performance of VPsearch with two standard tools for sequence
+lookup: Blast+, a standard tool that is optimized for inexact but fast sequence
+lookup via the matching sequence pair heuristic, and ggsearch36, part of the FASTA
+suite, which relies on exact
+alignment to achieve higher accuracy at the cost of greatly increased lookup
+times. We show that VPsearch manages to combine the good aspects of both tools,
+while avoiding the drawbacks.
 
-If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used:
-- `@author:2001`  ->  "Author et al. (2001)"
-- `[@author:2001]` -> "(Author et al., 2001)"
-- `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
 
 # Figures
 
@@ -96,7 +86,8 @@ Figure sizes can be customized by adding an optional second parameter:
 
 # Acknowledgements
 
+We would like to thank Jun Isayama and Yuko Kiridoshi for stimulating
+discussions, and Homin Park for help in setting up the computational
+infrastructure.
 
 # References
-
-
