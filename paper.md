@@ -26,17 +26,17 @@ bibliography: paper.bib
 
 # Summary
 
-Similarity search, finding an approximate match from a database of known
-nucleotide sequences given an unknown query sequence, is a central task in the
-taxonomic determination and functional understanding of newly sequenced
-organisms. As databases of known, curated sequences and the number of unknown
-sequences continue to grow exponentially, tools that can organize genomic data
-at scale and make it efficiently accessible are of fundamental importance.
+With the advent of cheap and easily accessible sequencing technologies, the
+amount of available genomic data is growing exponentially. A central task to
+gain insight from sequencing data is _similarity search_: for a set of unknown
+query sequences, find the best approximate matches in a database of known
+sequences. Similarity search is important for taxonomic determination,
+elucidation of functional pathways, and so on.
 
-Over the years, a number of tools for similarity search have improved upon
-BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of these, such
-as the FASTA tool suite [@2016-pearson-FindingProteinNucleotide], provide rapid
-protein or nucleotide similarity search based on sequence content
+Over the years, a number of tools for similarity search have improved upon the
+venerable BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of
+these, such as the FASTA tool suite [@2016-pearson-FindingProteinNucleotide],
+provide rapid protein or nucleotide similarity search based on sequence content
 alone. Others, such as the RDP classifier [@2007-wang-NaiveBayesianClassifier]
 for microbiome analysis, take taxonomic information or other domain-specific
 information into account to improve classification sensitivity or to provide
@@ -46,23 +46,28 @@ speed [@2019-marcais-SketchingSublinearData].
 
 # Statement of need
 
-We present VPsearch, a light-weight Python package and command-line tool to
-organize nucleotide sequences into a so-called _vantage point tree_
-[@1991-uhlmann-SatisfyingGeneralProximity;
-1993-yianilos-DataStructuresAlgorithms]. This data structure allows for
-similarity searches that use a number of lookups proportional to the logarithm
-of the size of the database (rather than scanning through the database in
-linear fashion), and hence greatly speeds up similarity search queries. In the
-case study below we show that for short sequences (such as the 16S rRNA gene
-used in bacterial classification) VPsearch outperforms both BLAST (7x speedup)
-and ggsearch36 from the FASTA suite (27x speedup) without any loss in accuracy.
+VPsearch is a light-weight Python package and command-line tool to perform fast
+but exact similarity search. Given a database of known sequences, it builds a
+so-called _vantage point tree_ [@1991-uhlmann-SatisfyingGeneralProximity;
+@1993-yianilos-DataStructuresAlgorithms], a data structure that allows for
+similarity lookups in time proportional to the logarithm of the size of the
+database. For a set of unknown sequences, VPsearch is then able to query this
+tree and return the best matching results from the database. In the case study
+below we show that for short sequences (such as the 16S rRNA gene used in
+bacterial classification) VPsearch outperforms both BLAST (7x speedup) and
+ggsearch36 from the FASTA suite (27x speedup) without any loss in accuracy.
 
 The VPsearch tool is implemented in Python, using Cython for
-performance-critical sections.  It outputs similarity search results in the
-"BLAST-6" tabular format also used by BLAST, Diamond, the FASTA tool suite and
-others, so that VPsearch can be used as a drop-in replacement for any of these
-tools. VPsearch is able to return the $k$ most similar sequences for a given
-query, not just the most similar match, and is fully multithreaded.
+performance-critical sections, and to interface with external libraries. To
+compare sequences during indexing and querying, VPsearch calls out to Parasail
+[@2016-daily-ParasailSIMDLibrary], a library of SIMD-optimized implementations
+for global and local sequence alignment.
+
+VPsearch outputs similarity search results in the "BLAST-6" tabular format also
+used by BLAST, Diamond, the FASTA tool suite and others, so that it can be used
+as a drop-in replacement for any of these tools. VPsearch is able to return the
+$k$ most similar sequences for a given query, not just the most similar match,
+and is fully multithreaded.
 
 # Case study
 
@@ -80,21 +85,32 @@ combine the good aspects of both tools, while avoiding the drawbacks.
     scales logarithmically as the size of the database
     increases.\label{fig:execution-time}](execution-time.pdf){ width=70% }
 
-For our case study, we look up 232 query sequences from the Mothur SOP dataset
-[@2013-kozich-DevelopmentDualIndexSequencing] in the Silva database
-[@2013-quast-SILVARibosomalRNA] of 16S sequences. The database was processed by
-excising the v4 region and removing duplicate sequences, resulting in a
-database of 230,013 sequences (each approximately 250 base pairs in length)
-with known taxonomies.
+We use VPsearch to look up 232 query sequences from the Mothur SOP dataset
+[@2013-kozich-DevelopmentDualIndexSequencing] in the Silva database of
+bacterial 16S sequences [@2013-quast-SILVARibosomalRNA]. The database was
+processed by excising the v4 region of the full-length 16S sequences and
+removing duplicate sequences, resulting in a database of 230,013 sequences
+(each approximately 250 base pairs in length) with known taxonomies. The Mothur
+SOP dataset was processed using the dada2 protocol
+[@2016-callahan-DADA2HighresolutionSample], resulting in 232 Amplicon Sequence
+Variants (ASVs), representing distinct organisms in the dataset.
 
 On the full Silva database, VPsearch is clearly the fastest (20s total lookup
-time), compared to Blast+ (157s) and ggsearch (561.3s). For Blast+ and
-ggsearch36, the total lookup time scales linearly with the size of the
-database, whereas for VPsearch the scaling is logarithmical (in other words,
-making the database 10 times larger adds a constant factor to the total lookup
-time). We therefore believe that VPsearch will continue to be an accurate yet
-performant lookup tool, even as sizes of genomic databases continue to
-increase.
+time), compared to Blast+ (157s) and ggsearch (561.3s)
+(\autoref{fig:execution-time}). For Blast+ and ggsearch36, the total lookup
+time scales linearly with the size of the database, whereas for VPsearch the
+scaling is logarithmical (in other words, making the database 10 times larger
+adds a constant factor to the total lookup time).
+
+For each lookup, we compared the top matches (ranked by alignment score)
+between VPsearch, ggsearch36, and Blast+. Out of 232 ASVs there is one sequence
+where the taxonomic assignment differs between ggsearch36 and VPsearch, due to
+a small difference in how the alignment parameters are chosen for both
+algorithms. Both algorithms identify the ASV as being in the family of
+_Lachnospiraceae_, with the difference on the genus level. Between VPsearch and
+Blast+, there are three difference assignments, due to the fact that several
+sequences in the database present an equally plausible match for the query
+sequence.
 
 # Acknowledgements
 
