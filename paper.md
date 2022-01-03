@@ -26,12 +26,16 @@ bibliography: paper.bib
 
 # Summary
 
-With the advent of cheap and easily accessible sequencing technologies, the
-amount of available genomic data is growing exponentially. A central task to
-gain insight from sequencing data is _similarity search_: for a set of unknown
-query sequences, find the best approximate matches in a database of known
-sequences. Similarity search is important for taxonomic determination,
-elucidation of functional pathways, and so on.
+Similarity search is a central task in computational biology, and in genomics
+in particular. In genomics, similarity search usually takes the following form:
+given an unknown nucleotide or protein sequence (the query), what are the most
+similar known sequences in a given database? In this context, similarity search
+is important for taxonomic determination, to establish phylogeny, or to
+annotate sequences and genes with functional information. With the advent of
+easily accessible high-throughput sequencing technologies, the amount of
+available genomic data continues to grow rapidly, and the demands for
+computationally efficient and accurate similarity search implementations have
+increased accordingly.
 
 Over the years, a number of tools for similarity search have improved upon the
 venerable BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of
@@ -46,9 +50,14 @@ speed [@2019-marcais-SketchingSublinearData].
 
 # Statement of need
 
-VPsearch is a light-weight Python package and command-line tool to perform fast
-but exact similarity search. Given a database of known sequences, it builds a
-so-called _vantage point tree_ [@1991-uhlmann-SatisfyingGeneralProximity;
+VPsearch is a light-weight Python package and command-line tool to perform
+similarity search. Unlike some of the approximate tools mentioned in the
+introduction, VPsearch can be seen as an exact similarity search
+implementation, taking the full sequence content into account (rather than a
+$k$-mer spectrum or other approximation).
+
+Given a database of known sequences, VPsearch builds a so-called _vantage point
+tree_ [@1991-uhlmann-SatisfyingGeneralProximity;
 @1993-yianilos-DataStructuresAlgorithms], a data structure that allows for
 similarity lookups in time proportional to the logarithm of the size of the
 database. For a set of unknown sequences, VPsearch is then able to query this
