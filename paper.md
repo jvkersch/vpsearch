@@ -29,13 +29,13 @@ bibliography: paper.bib
 Similarity search is a central task in computational biology, and in genomics
 in particular. In genomics, similarity search usually takes the following form:
 given an unknown nucleotide or protein sequence (the query), what are the most
-similar known sequences in a given database? In this context, similarity search
-is important for taxonomic determination, to establish phylogeny, or to
-annotate sequences and genes with functional information. With the advent of
-easily accessible high-throughput sequencing technologies, the amount of
-available genomic data continues to grow rapidly, and the demands for
-computationally efficient and accurate similarity search implementations have
-increased accordingly.
+similar sequences in a given database of known sequences? In this context,
+similarity search is important for taxonomic determination, to establish
+phylogenetic relationships, or to annotate sequences and genes with functional
+information. With the advent of easily accessible high-throughput sequencing
+technologies, the amount of available genomic data continues to grow rapidly,
+and the demands for computationally efficient and accurate similarity search
+implementations have increased accordingly.
 
 Over the years, a number of tools for similarity search have improved upon the
 venerable BLAST [@1990-blast] in terms of lookup speed and accuracy. Some of
@@ -52,9 +52,9 @@ speed [@2019-marcais-SketchingSublinearData].
 
 VPsearch is a light-weight Python package and command-line tool to perform
 similarity search. Unlike some of the approximate tools mentioned in the
-introduction, VPsearch can be seen as an exact similarity search
-implementation, taking the full sequence content into account (rather than a
-$k$-mer spectrum or other approximation).
+introduction, VPsearch provides an exact similarity search implementation,
+taking the full sequence content into account (rather than a $k$-mer spectrum
+or other approximation).
 
 Given a database of known sequences, VPsearch builds a so-called _vantage point
 tree_ [@1991-uhlmann-SatisfyingGeneralProximity;
@@ -76,7 +76,7 @@ VPsearch outputs similarity search results in the "BLAST-6" tabular format also
 used by BLAST, Diamond, the FASTA tool suite and others, so that it can be used
 as a drop-in replacement for any of these tools. VPsearch is able to return the
 $k$ most similar sequences for a given query, not just the most similar match,
-and is fully multithreaded.
+and supports querying the database in multithreaded mode.
 
 # Case study
 
@@ -102,7 +102,7 @@ removing duplicate sequences, resulting in a database of 230,013 sequences
 (each approximately 250 base pairs in length) with known taxonomies. The Mothur
 SOP dataset was processed using the dada2 protocol
 [@2016-callahan-DADA2HighresolutionSample], resulting in 232 Amplicon Sequence
-Variants (ASVs), representing distinct organisms in the dataset.
+Variants (ASVs), representing distinct taxonomic units in the dataset.
 
 On the full Silva database, VPsearch is clearly the fastest (20s total lookup
 time), compared to Blast+ (157s) and ggsearch (561.3s)
